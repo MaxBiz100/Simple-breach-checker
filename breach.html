@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Breach Checker</title>
+    <style>
+
+    body {
+
+        font-family:sans-serif;
+
+    }
+
+    </style>
+</head>
+<body>
+    <h2>Simple Breach Checker</h2>
+    <input type="text" id="emailInput" placeholder="Enter email">
+    <button onclick="checkBreaches()">Check</button>
+    <h3 id="blist1" style="display: none;"> Breaches your info was exposed in </h3>
+    <ul id="breachList"></ul>
+
+    <script>
+    //JS
+        async function checkBreaches() {
+            const email = document.getElementById("emailInput").value.trim();
+            const breachList = document.getElementById("breachList");
+            breachList.innerHTML = "";
+
+            if (!email) {
+                alert("Please enter an email address.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.xposedornot.com/v1/check-email/${encodeURIComponent(email)}`);
+                if (!response.ok) throw new Error("Failed to fetch data.");
+
+                const data = await response.json();
+                if (data.breaches && data.breaches.length > 0) {
+                	const blist = document.getElementById('blist1');
+                	blist.style.display = 'block';
+                    data.breaches[0].forEach(breach => {
+                        const li = document.createElement("li");
+                        li.textContent = breach;
+                        breachList.appendChild(li);
+                    });
+                } else {
+                    breachList.innerHTML = "<li>No breaches found.</li>";
+                }
+            } catch (error) {
+                breachList.innerHTML = `<li>Error: ${error.message}</li>`;
+            }
+        }
+    </script>
+</body>
+</html>
