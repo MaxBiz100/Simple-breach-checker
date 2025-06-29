@@ -3,7 +3,8 @@
 🛠️ # Simple Breach Checker
 
 Easy way to check if your email address is exposed in a databreach.
-⸻
+
+Want to support my work? Buy this for as low as $0.99 on Gumroad: https://blackfiresoftware.gumroad.com/l/sbc-1
 
 **Features**
 	•	Simple breach checker checks if your email address is in any data breaches or leaks
